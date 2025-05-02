@@ -2,6 +2,18 @@ import { useState } from "react";
 import sendImage from "../assets/send.png";
 import symbolTranslate from "../assets/translate.png";
 
+const languages = [
+  "English",
+  "Spanish",
+  "Mandarin",
+  "French",
+  "German",
+  "Italian",
+  "Portuguese",
+  "Russian",
+  "Hindi",
+];
+
 export default function Form({ onSend, onTranslate }) {
   const [inputText, setInputText] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("english");
@@ -11,7 +23,7 @@ export default function Form({ onSend, onTranslate }) {
     if (inputText.trim()) {
       onSend(inputText);
       onTranslate(inputText, selectedLanguage);
-      setInputText('');
+      setInputText("");
     }
   }
 
@@ -30,11 +42,16 @@ export default function Form({ onSend, onTranslate }) {
       <div className="chat__inputs">
         <div className="chat__selectImg">
           <img src={symbolTranslate} alt="Symbol Translate" />
-          <select className="chat__select" id="languages" onChange={(e) => setSelectedLanguage(e.target.value)}>
-            <option value="english">English</option>
-            <option value="spanish">Spanish</option>
-            <option value="french">French</option>
-            <option value="german">German</option>
+          <select
+            className="chat__select"
+            id="languages"
+            onChange={(e) => setSelectedLanguage(e.target.value)}
+          >
+            {languages.map((language) => (
+              <option value={language} key={language}>
+                {language}
+              </option>
+            ))}
           </select>
         </div>
         <button className="chat__button">

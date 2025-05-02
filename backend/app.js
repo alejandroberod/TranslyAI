@@ -31,16 +31,19 @@ const openai = new OpenAI({
 app.post("/api/translate", async (req, res) => {
   const { text, lang } = req.body;
 
+  if (!text || !lang) {
+    return res.status(400).json({
+      translatedText: "Text and language is required"
+    });
+  }
+
   const messages = [
     {
       role: "system",
       content: `You are a professional translator. Your task is to:
-      1. If the input is already in ${lang}, respond IN ${lang.toUpperCase()}: 
-      "Please select a different language as the text is already in ${lang}" 
-      (TRANSLATE THIS MESSAGE TO ${lang.toUpperCase()})
-      2. Detect the input language automatically
-      3. Translate the text to ${lang}
-      4. Return ONLY the translated text without any additional commentary
+      1. Detect the input language automatically
+      2. Translate the text to ${lang}
+      3. Return ONLY the translated text without any additional commentary
   
       Never:
         - Add explanations
@@ -62,13 +65,25 @@ app.post("/api/translate", async (req, res) => {
     const translation = response.choices[0].message.content;
     return res.status(200).json({ translatedText: translation });
   } catch (error) {
-    console.error(error);
-  }
+    console.error("Error en /api/translate:", error);
 
-  return res.status(200).json({
-    message: "Respuesta",
-    contenido: { text, lang },
-  });
+    if (error instanceof OpenAI.APIError) {
+      const statusCode = error.status || 500;
+      const message = {
+        401: "Invalid or missing API key",
+        429: "Rate limit exceeded - Please try again later",
+        400: "Invalid request parameters",
+        404: "Model not found",
+        503: "Service temporarily unavailable"
+      }[statusCode] || "OpenAI API error";
+
+      return res.status(statusCode).json({ translatedText: message });
+    }
+
+    return res.status(500).json({
+      translatedText: "Internal server error - Please try again"
+    });
+  }
 });
 
 app.listen(PORT, () => {

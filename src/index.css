@@ -15,6 +15,7 @@ body {
   align-items: center;
   height: 100vh;
   font-family: "Roboto", sans-serif;
+  margin: 0;
 }
 
 .chat {
@@ -158,6 +159,7 @@ body {
   align-items: center;
   border: 1px solid var(--primary);
   border-radius: 6px;
+  padding: 1px 3px;
 }
 
 .chat__selectImg img {
@@ -166,7 +168,7 @@ body {
 }
 
 .chat__select {
-  background-color: transparent;
+  background-color: var(--background);
   color: white;
   height: 2rem;
   outline: none;
