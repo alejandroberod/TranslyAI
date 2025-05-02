@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
   --primary: #EA7C69;
   --secondary: #2D303E;
@@ -12,6 +14,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
 }
 
 .chat {
@@ -53,6 +57,7 @@ body {
 .chat__title {
   margin: 0 0 0.6rem 0;
   font-size: 1rem;
+  font-weight: 400;
 }
 
 .chat__status {
@@ -65,11 +70,48 @@ body {
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer/Edge */
+  padding: 0 1rem;
+  scroll-behavior: smooth;
 }
 /* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
 .chat__messages::-webkit-scrollbar {
   display: none;
 }
+
+.chat__messages .bot__text,
+.chat__messages .messages__user {
+  border-radius: 6px;
+  max-width: 70%;
+  color: #FFFFFF;
+  padding: 6px 12px;
+}
+
+.messages__bot {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+.messages__bot .bot__text {
+  background-color: var(--secondary);
+  margin-right: auto;
+  width: fit-content;
+  margin-top: 0;
+}
+
+.messages__user {
+  background-color: var(--primary);
+  margin-left: auto;
+  text-align: end;
+  width: fit-content;
+  filter: drop-shadow(0px 8px 24px rgba(234, 124, 105, 0.30));
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 
 .chat__form {
   display: flex;
@@ -91,28 +133,55 @@ body {
   caret-color: var(--primary);
   color: white;
   width: 50%;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
+@media (min-width: 576px) { 
+  .chat__input {
+    width: 60%;
+  }
+} 
+
 .chat__input::placeholder {
-  color: white;
+  color: #FAFAFA;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .chat__inputs {
   flex: 1;
+  display: flex;
+}
+
+.chat__selectImg {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  padding: 1px 3px;
+}
+
+.chat__selectImg img {
+  display: block;
+  height: 1.5rem;
 }
 
 .chat__select {
-  width: 6rem;
-  background-color: transparent;
+  background-color: var(--background);
   color: white;
-  border-radius: 6px;
   height: 2rem;
   outline: none;
-  border: 1px solid var(--primary);
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 400;
+  width: 4.5rem;
 }
 
 .chat__button {
   padding: 0px;
   background-color: transparent;
   border: none;
+  flex: 1;
+  cursor: pointer;
 }
